@@ -7,7 +7,8 @@
     "start": "nodemon --files src/app.ts",
     "lint": "eslint . --ext .ts",
     "update-schema": "prisma generate",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc && cp ./package.json ./dist/"
   },
   "keywords": [],
   "author": "",
