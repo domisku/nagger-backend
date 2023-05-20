@@ -1,5 +1,5 @@
-import { prisma } from "../app";
 import * as webpush from "web-push";
+import { prisma } from "../app";
 
 export class PushService {
   static async sendPushNotification(
@@ -7,26 +7,28 @@ export class PushService {
     title: string,
     body: string
   ) {
-    const subscription = await prisma.subscription.findUnique({
+    const subscriptions = await prisma.subscription.findMany({
       where: { userId },
     });
 
-    if (subscription) {
-      const pushSubscription = {
-        endpoint: subscription.endpoint,
-        keys: subscription.keys,
-        expirationTime: subscription.expirationTime,
-      };
+    if (subscriptions.length > 0) {
+      for (const subscription of subscriptions) {
+        const pushSubscription = {
+          endpoint: subscription.endpoint,
+          keys: subscription.keys,
+          expirationTime: subscription.expirationTime,
+        };
 
-      try {
-        await webpush.sendNotification(
-          pushSubscription as any,
-          JSON.stringify({
-            notification: { title, body },
-          })
-        );
-      } catch (error) {
-        throw new Error("Could not send notification");
+        try {
+          await webpush.sendNotification(
+            pushSubscription as any,
+            JSON.stringify({
+              notification: { title, body },
+            })
+          );
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   }

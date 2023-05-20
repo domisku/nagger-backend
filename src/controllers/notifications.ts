@@ -35,11 +35,11 @@ export const subscribeToPush = async (req: Request, res: Response) => {
   const { endpoint, expirationTime, keys } = req.body;
 
   const activeSub = await prisma.subscription.findUnique({
-    where: { userId: req.userId },
+    where: { endpoint },
   });
 
   if (activeSub) {
-    await prisma.subscription.delete({ where: { userId: req.userId } });
+    await prisma.subscription.delete({ where: { endpoint } });
   }
 
   await prisma.subscription.create({

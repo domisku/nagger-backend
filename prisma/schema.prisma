@@ -17,7 +17,7 @@ model User {
   salt          String
   name          String?
   notifications Notification[]
-  subscription  Subscription?
+  subscriptions  Subscription[]
 }
 
 model Notification {
@@ -35,9 +35,9 @@ model Notification {
 
 model Subscription {
   id             String @id @default(auto()) @map("_id") @db.ObjectId
-  endpoint       String
+  endpoint       String @unique
   expirationTime Float?
   keys           Json
   user           User   @relation(fields: [userId], references: [id])
-  userId         String @unique @db.ObjectId
+  userId         String @db.ObjectId
 }
