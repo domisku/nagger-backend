@@ -4,7 +4,9 @@ import { validateResult } from "./utils/validate-result";
 export const createNotificationValidator = [
   body("title").isString().isLength({ min: 2, max: 100 }).trim().escape(),
   body("body").isString().isLength({ max: 300 }).trim().escape(),
-  body("date").isISO8601(),
+  body("date")
+    .isISO8601()
+    .custom((date) => date >= new Date().toISOString()),
   body("sendPush").isBoolean(),
   body("sendEmail").isBoolean(),
   validateResult,
