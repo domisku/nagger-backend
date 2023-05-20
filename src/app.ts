@@ -16,7 +16,7 @@ const PORT = 8080;
 export const prisma = new PrismaClient();
 initServices();
 
-app.use(cors());
+app.use(cors({ origin: process.env.CLIENT_URL }));
 app.use(express.json());
 app.use(authRouter, notificationsRouter);
 app.use(handleErrors);

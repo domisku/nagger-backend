@@ -12,6 +12,6 @@ RUN npx prisma generate
 
 RUN npx tsc
 
-EXPOSE 8080
+EXPOSE 8080:8080
 
 CMD ["npm", "run", "start:prod"]
