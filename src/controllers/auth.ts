@@ -20,7 +20,8 @@ export const signUp = async (req: Request, res: Response) => {
     });
 
     return res.status(200).send({ token, expiresIn: tokenExpirationInSeconds });
-  } catch {
+  } catch (err) {
+    console.log(err);
     throw new Error("Failed to create user");
   }
 };
