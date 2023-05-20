@@ -2,15 +2,14 @@ import { Notification, User } from "@prisma/client";
 import { scheduleJob } from "node-schedule";
 import * as webpush from "web-push";
 import { prisma } from "../app";
-import { config } from "../config/config";
 import { QueueService } from "../services/queue-service";
 
 export function initServices(): void {
   QueueService.startWorker();
   webpush.setVapidDetails(
     "mailto:nagger.notifications@gmail.com",
-    config.VAPID_PUBLIC_KEY,
-    config.VAPID_PRIVATE_KEY
+    process.env.VAPID_PUBLIC_KEY,
+    process.env.VAPID_PRIVATE_KEY
   );
 
   scheduleJob("0 0 * * *", async () => {

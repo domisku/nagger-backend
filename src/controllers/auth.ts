@@ -2,7 +2,6 @@ import { pbkdf2Sync, randomBytes } from "crypto";
 import { Request, Response } from "express";
 import { sign } from "jsonwebtoken";
 import { prisma } from "../app";
-import { config } from "../config/config";
 
 export const signUp = async (req: Request, res: Response) => {
   const { email, password, name } = req.body;
@@ -11,14 +10,12 @@ export const signUp = async (req: Request, res: Response) => {
   const hash = pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`);
 
   try {
-    console.log("Using prisma");
     const user = await prisma.user.create({
       data: { email, password: hash, name, salt },
     });
-    console.log("Prisma worked");
 
     const tokenExpirationInSeconds = 60 * 60;
-    const token = sign({ userId: user.id, email }, config.JWT_SECRET, {
+    const token = sign({ userId: user.id, email }, process.env.JWT_SECRET, {
       expiresIn: tokenExpirationInSeconds,
     });
 
@@ -54,7 +51,7 @@ export const signIn = async (req: Request, res: Response) => {
       const tokenExpirationInSeconds = 60 * 60;
       const token = sign(
         { userId: existingUser.id, email },
-        config.JWT_SECRET,
+        process.env.JWT_SECRET,
         {
           expiresIn: tokenExpirationInSeconds,
         }

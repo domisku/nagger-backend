@@ -1,15 +1,14 @@
 import { Notification, User } from "@prisma/client";
 import { Queue, Worker } from "bullmq";
-import { config } from "../config/config";
 import { EmailService } from "./email-service";
 import { PushService } from "./push-service";
 
 export class QueueService {
   static readonly NOTIFICATIONS_QUEUE_NAME = "notifications";
   static readonly redisConnection = {
-    host: config.REDIS_HOST,
+    host: process.env.REDIS_HOST,
     port: 16135,
-    password: config.REDIS_PASSWORD,
+    password: process.env.REDIS_PASSWORD,
   };
   static readonly notificationsQueue = new Queue(
     QueueService.NOTIFICATIONS_QUEUE_NAME,
