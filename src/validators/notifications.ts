@@ -6,7 +6,15 @@ export const createNotificationValidator = [
   body("body").isString().isLength({ max: 300 }).trim().escape(),
   body("date")
     .isISO8601()
-    .custom((date) => date >= new Date().toISOString()),
+    .custom((date) => {
+      const isFutureDate = date >= new Date().toISOString();
+
+      if (!isFutureDate) {
+        throw new Error("Date must be in the future");
+      }
+
+      return true;
+    }),
   body("sendPush").isBoolean(),
   body("sendEmail").isBoolean(),
   validateResult,
