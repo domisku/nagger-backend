@@ -36,11 +36,10 @@ exports.initServices = void 0;
 const node_schedule_1 = require("node-schedule");
 const webpush = __importStar(require("web-push"));
 const app_1 = require("../app");
-const config_1 = require("../config/config");
 const queue_service_1 = require("../services/queue-service");
 function initServices() {
     queue_service_1.QueueService.startWorker();
-    webpush.setVapidDetails("mailto:nagger.notifications@gmail.com", config_1.config.VAPID_PUBLIC_KEY, config_1.config.VAPID_PRIVATE_KEY);
+    webpush.setVapidDetails("mailto:nagger.notifications@gmail.com", process.env.VAPID_PUBLIC_KEY, process.env.VAPID_PRIVATE_KEY);
     (0, node_schedule_1.scheduleJob)("0 0 * * *", () => __awaiter(this, void 0, void 0, function* () {
         const notificationsToSend = yield app_1.prisma.notification.findMany({
             where: { date: { gt: new Date() } },

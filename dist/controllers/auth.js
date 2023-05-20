@@ -13,24 +13,22 @@ exports.signIn = exports.signUp = void 0;
 const crypto_1 = require("crypto");
 const jsonwebtoken_1 = require("jsonwebtoken");
 const app_1 = require("../app");
-const config_1 = require("../config/config");
 const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password, name } = req.body;
     const salt = (0, crypto_1.randomBytes)(16).toString("hex");
     const hash = (0, crypto_1.pbkdf2Sync)(password, salt, 1000, 64, `sha512`).toString(`hex`);
     try {
-        console.log("Using prisma");
         const user = yield app_1.prisma.user.create({
             data: { email, password: hash, name, salt },
         });
-        console.log("Prisma worked");
         const tokenExpirationInSeconds = 60 * 60;
-        const token = (0, jsonwebtoken_1.sign)({ userId: user.id, email }, config_1.config.JWT_SECRET, {
+        const token = (0, jsonwebtoken_1.sign)({ userId: user.id, email }, process.env.JWT_SECRET, {
             expiresIn: tokenExpirationInSeconds,
         });
         return res.status(200).send({ token, expiresIn: tokenExpirationInSeconds });
     }
-    catch (_a) {
+    catch (err) {
+        console.log(err);
         throw new Error("Failed to create user");
     }
 });
@@ -49,7 +47,7 @@ const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const hash = (0, crypto_1.pbkdf2Sync)(password, existingUser.salt, 1000, 64, `sha512`).toString(`hex`);
         if (hash === existingUser.password) {
             const tokenExpirationInSeconds = 60 * 60;
-            const token = (0, jsonwebtoken_1.sign)({ userId: existingUser.id, email }, config_1.config.JWT_SECRET, {
+            const token = (0, jsonwebtoken_1.sign)({ userId: existingUser.id, email }, process.env.JWT_SECRET, {
                 expiresIn: tokenExpirationInSeconds,
             });
             return res
@@ -57,7 +55,7 @@ const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 .send({ token, expiresIn: tokenExpirationInSeconds });
         }
     }
-    catch (_b) {
+    catch (_a) {
         throw new Error("Failed to sign in");
     }
 });

@@ -11,7 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.QueueService = void 0;
 const bullmq_1 = require("bullmq");
-const config_1 = require("../config/config");
 const email_service_1 = require("./email-service");
 const push_service_1 = require("./push-service");
 class QueueService {
@@ -53,9 +52,9 @@ class QueueService {
 }
 QueueService.NOTIFICATIONS_QUEUE_NAME = "notifications";
 QueueService.redisConnection = {
-    host: config_1.config.REDIS_HOST,
+    host: process.env.REDIS_HOST,
     port: 16135,
-    password: config_1.config.REDIS_PASSWORD,
+    password: process.env.REDIS_PASSWORD,
 };
 QueueService.notificationsQueue = new bullmq_1.Queue(QueueService.NOTIFICATIONS_QUEUE_NAME, {
     connection: QueueService.redisConnection,
