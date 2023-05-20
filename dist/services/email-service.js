@@ -11,11 +11,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EmailService = void 0;
 const nodemailer_1 = require("nodemailer");
+const config_1 = require("../config/config");
 class EmailService {
     static sendMail(to, text, html) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield EmailService.transport.sendMail({
-                from: `${process.env.SMTP_EMAIL}`,
+                from: `${config_1.config.SMTP_EMAIL}`,
                 to,
                 subject: "Notification",
                 text,
@@ -27,8 +28,8 @@ class EmailService {
 EmailService.transport = (0, nodemailer_1.createTransport)({
     service: "gmail",
     auth: {
-        user: `${process.env.SMTP_EMAIL}`,
-        pass: `${process.env.SMTP_PASSWORD}`,
+        user: `${config_1.config.SMTP_EMAIL}`,
+        pass: `${config_1.config.SMTP_PASSWORD}`,
     },
 });
 exports.EmailService = EmailService;

@@ -2,12 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.requireAuth = void 0;
 const jsonwebtoken_1 = require("jsonwebtoken");
+const config_1 = require("../config/config");
 const authorization_error_1 = require("../errors/authorization-error");
 function requireAuth(req, res, next) {
     const authorizationHeader = req.headers.authorization;
     if (authorizationHeader) {
         try {
-            const token = (0, jsonwebtoken_1.verify)(authorizationHeader, process.env.JWT_SECRET);
+            const token = (0, jsonwebtoken_1.verify)(authorizationHeader, config_1.config.JWT_SECRET);
             req.userId = token.userId;
             return next();
         }
