@@ -11,7 +11,7 @@ export const createNotificationValidator = [
 ];
 
 export const pushSubscriptionValidator = [
-  body("endpoint").isString().notEmpty().trim().escape(),
+  body("endpoint").isString().notEmpty(),
   body("expirationTime").optional(),
   body("keys")
     .exists()
