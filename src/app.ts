@@ -11,7 +11,7 @@ import notificationsRouter from "./routers/notifications-router";
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = 8080;
 
 export const prisma = new PrismaClient();
 initServices();
