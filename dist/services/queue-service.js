@@ -53,7 +53,7 @@ class QueueService {
 QueueService.NOTIFICATIONS_QUEUE_NAME = "notifications";
 QueueService.redisConnection = {
     host: process.env.REDIS_HOST,
-    port: 12311,
+    port: 16135,
     password: process.env.REDIS_PASSWORD,
 };
 QueueService.notificationsQueue = new bullmq_1.Queue(QueueService.NOTIFICATIONS_QUEUE_NAME, {

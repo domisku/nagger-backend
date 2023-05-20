@@ -7,7 +7,7 @@ export class QueueService {
   static readonly NOTIFICATIONS_QUEUE_NAME = "notifications";
   static readonly redisConnection = {
     host: process.env.REDIS_HOST,
-    port: 12311,
+    port: 16135,
     password: process.env.REDIS_PASSWORD,
   };
   static readonly notificationsQueue = new Queue(
