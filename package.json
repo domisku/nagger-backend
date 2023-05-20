@@ -8,7 +8,7 @@
     "lint": "eslint . --ext .ts",
     "update-schema": "prisma generate",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm install && tsc && cp ./package.json ./dist/ && cd ./dist && npm install --only=prod"
+    "build": "npm install -g typescript && tsc && cp ./package.json ./dist/ && cd ./dist && npm install --only=prod"
   },
   "keywords": [],
   "author": "",
