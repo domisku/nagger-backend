@@ -19,9 +19,11 @@ const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const salt = (0, crypto_1.randomBytes)(16).toString("hex");
     const hash = (0, crypto_1.pbkdf2Sync)(password, salt, 1000, 64, `sha512`).toString(`hex`);
     try {
+        console.log("Using prisma");
         const user = yield app_1.prisma.user.create({
             data: { email, password: hash, name, salt },
         });
+        console.log("Prisma worked");
         const tokenExpirationInSeconds = 60 * 60;
         const token = (0, jsonwebtoken_1.sign)({ userId: user.id, email }, config_1.config.JWT_SECRET, {
             expiresIn: tokenExpirationInSeconds,

@@ -11,9 +11,11 @@ export const signUp = async (req: Request, res: Response) => {
   const hash = pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`);
 
   try {
+    console.log("Using prisma");
     const user = await prisma.user.create({
       data: { email, password: hash, name, salt },
     });
+    console.log("Prisma worked");
 
     const tokenExpirationInSeconds = 60 * 60;
     const token = sign({ userId: user.id, email }, config.JWT_SECRET, {
