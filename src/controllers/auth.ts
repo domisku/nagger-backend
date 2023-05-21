@@ -49,7 +49,7 @@ export const signIn = async (req: Request, res: Response) => {
     ).toString(`hex`);
 
     if (hash === existingUser.password) {
-      const tokenExpirationInSeconds = 60 * 60;
+      const tokenExpirationInSeconds = 60 * 60 * 24 * 7;
       const token = sign(
         { userId: existingUser.id, email },
         process.env.JWT_SECRET,
