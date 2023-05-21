@@ -1,6 +1,7 @@
 import express from "express";
 import {
   createNotification,
+  listNotifications,
   subscribeToPush,
 } from "../controllers/notifications";
 import { requireAuth } from "../middleware/require-auth";
@@ -24,5 +25,7 @@ notificationsRouter.post(
   pushSubscriptionValidator,
   subscribeToPush
 );
+
+notificationsRouter.get("/notifications", requireAuth, listNotifications);
 
 export default notificationsRouter;

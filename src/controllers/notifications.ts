@@ -53,3 +53,13 @@ export const subscribeToPush = async (req: Request, res: Response) => {
 
   return res.status(201).send({});
 };
+
+export const listNotifications = async (req: Request, res: Response) => {
+  const userId = req.userId;
+
+  const notifications = await prisma.notification.findMany({
+    where: { userId },
+  });
+
+  return res.status(200).send(notifications);
+};
