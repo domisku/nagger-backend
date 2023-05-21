@@ -7,7 +7,7 @@ export const createNotificationValidator = [
   body("date")
     .isISO8601()
     .custom((date) => {
-      const isFutureDate = date >= new Date().toISOString();
+      const isFutureDate = new Date(date).getTime() >= new Date().getTime();
 
       if (!isFutureDate) {
         throw new Error("Date must be in the future");
