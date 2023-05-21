@@ -2,7 +2,7 @@ import { body } from "express-validator";
 import { validateResult } from "./utils/validate-result";
 
 export const createNotificationValidator = [
-  body("title").isString().isLength({ min: 2, max: 100 }).trim().escape(),
+  body("title").isString().notEmpty().isLength({ max: 100 }).trim().escape(),
   body("body").isString().isLength({ max: 300 }).trim().escape(),
   body("date")
     .isISO8601()
