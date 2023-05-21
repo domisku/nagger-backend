@@ -14,7 +14,7 @@ export const signUp = async (req: Request, res: Response) => {
       data: { email, password: hash, name, salt },
     });
 
-    const tokenExpirationInSeconds = 60 * 60;
+    const tokenExpirationInSeconds = 60 * 60 * 24 * 7;
     const token = sign({ userId: user.id, email }, process.env.JWT_SECRET, {
       expiresIn: tokenExpirationInSeconds,
     });
