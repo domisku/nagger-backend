@@ -23,7 +23,7 @@ model User {
 model Notification {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   title     String
-  body      String
+  body      String?   
   date      DateTime
   sendEmail Boolean
   sendPush  Boolean

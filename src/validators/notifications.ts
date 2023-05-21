@@ -3,7 +3,12 @@ import { validateResult } from "./utils/validate-result";
 
 export const createNotificationValidator = [
   body("title").isString().notEmpty().isLength({ max: 100 }).trim().escape(),
-  body("body").optional().isString().isLength({ max: 300 }).trim().escape(),
+  body("body")
+    .optional({ nullable: true })
+    .isString()
+    .isLength({ max: 300 })
+    .trim()
+    .escape(),
   body("date")
     .isISO8601()
     .custom((date) => {

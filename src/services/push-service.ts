@@ -5,7 +5,7 @@ export class PushService {
   static async sendPushNotification(
     userId: string,
     title: string,
-    body: string
+    body?: string
   ) {
     const subscriptions = await prisma.subscription.findMany({
       where: { userId },
@@ -23,7 +23,7 @@ export class PushService {
           await webpush.sendNotification(
             pushSubscription as any,
             JSON.stringify({
-              notification: { title, body },
+              notification: { title, ...(body ? { body } : {}) },
             })
           );
         } catch (error) {

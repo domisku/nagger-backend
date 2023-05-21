@@ -15,7 +15,7 @@ export class EmailService {
       to,
       subject: "Notification",
       text,
-      html,
+      ...(html ? { html } : {}),
     });
   }
 }
