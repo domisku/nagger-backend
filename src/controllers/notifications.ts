@@ -58,8 +58,30 @@ export const listNotifications = async (req: Request, res: Response) => {
   const userId = req.userId;
 
   const notifications = await prisma.notification.findMany({
-    where: { userId },
+    where: { userId, date: { gt: new Date() } },
   });
 
   return res.status(200).send(notifications);
+};
+
+export const deleteNotification = async (req: Request, res: Response) => {
+  const userId = req.userId;
+  const notificationId = req.params.id;
+
+  const notification = await prisma.notification.findUnique({
+    where: { id: notificationId },
+    include: { user: true },
+  });
+
+  if (!notification) {
+    throw new Error("Notification not found");
+  }
+
+  if (notification.user.id !== userId) {
+    throw new Error("You do not have permission to delete this notification");
+  }
+
+  await prisma.notification.delete({ where: { id: notificationId } });
+
+  return res.status(200).send({});
 };

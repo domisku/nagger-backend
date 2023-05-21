@@ -1,6 +1,7 @@
 import express from "express";
 import {
   createNotification,
+  deleteNotification,
   listNotifications,
   subscribeToPush,
 } from "../controllers/notifications";
@@ -27,5 +28,11 @@ notificationsRouter.post(
 );
 
 notificationsRouter.get("/notifications", requireAuth, listNotifications);
+
+notificationsRouter.delete(
+  "/notifications/:id",
+  requireAuth,
+  deleteNotification
+);
 
 export default notificationsRouter;
