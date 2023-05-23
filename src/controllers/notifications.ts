@@ -39,7 +39,7 @@ export const subscribeToPush = async (req: Request, res: Response) => {
   });
 
   if (activeSub) {
-    await prisma.subscription.delete({ where: { endpoint } });
+    return res.status(200).send({});
   }
 
   await prisma.subscription.create({
