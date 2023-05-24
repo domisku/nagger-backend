@@ -38,7 +38,11 @@ export const subscribeToPush = async (req: Request, res: Response) => {
     where: { userId: req.userId },
   });
 
-  if (activeSub && activeSub.endpoint !== endpoint) {
+  if (activeSub) {
+    if (activeSub.endpoint === endpoint) {
+      return res.status(200).send({});
+    }
+
     await prisma.subscription.update({
       where: { id: activeSub.id },
       data: { endpoint, expirationTime, keys },
