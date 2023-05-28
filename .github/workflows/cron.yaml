@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: cURL request
-        run: curl ${{ env.PING_ENDPOINT_URL }}
+        run: curl ${{ secrets.PING_ENDPOINT_URL }}
