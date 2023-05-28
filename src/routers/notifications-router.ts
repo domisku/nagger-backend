@@ -1,4 +1,4 @@
-import express from "express";
+import { Router } from "express";
 import {
   createNotification,
   deleteNotification,
@@ -11,7 +11,7 @@ import {
   pushSubscriptionValidator,
 } from "../validators/notifications";
 
-const notificationsRouter = express.Router();
+const notificationsRouter = Router();
 
 notificationsRouter.post(
   "/create",

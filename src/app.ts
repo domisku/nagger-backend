@@ -7,6 +7,7 @@ import { initServices } from "./init/init-services";
 import { handleErrors } from "./middleware/handle-errors";
 import authRouter from "./routers/auth-router";
 import notificationsRouter from "./routers/notifications-router";
+import pingRouter from "./routers/ping-router";
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ initServices();
 
 app.use(cors({ origin: process.env.CLIENT_URL }));
 app.use(express.json());
-app.use(authRouter, notificationsRouter);
+app.use(authRouter, notificationsRouter, pingRouter);
 app.use(handleErrors);
 
 app.listen(PORT, () => {
