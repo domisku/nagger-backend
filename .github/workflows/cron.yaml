@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: cURL request
-        run: curl https://nagger-docker.onrender.com/ping
+        run: curl $PING_ENDPOINT_URL
