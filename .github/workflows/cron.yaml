@@ -1,0 +1,13 @@
+name: Server ping
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+
+jobs:
+  ping:
+    name: Ping server to wake it up
+    runs-on: ubuntu-latest
+    steps:
+      - name: cURL request
+        run: curl https://nagger-docker.onrender.com/ping
